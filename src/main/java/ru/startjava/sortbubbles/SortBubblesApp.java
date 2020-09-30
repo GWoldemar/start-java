@@ -3,64 +3,50 @@ package ru.startjava.sortbubbles;
 import ru.startjava.core.GraphicsCore;
 
 import java.awt.*;
+import java.util.Random;
 
 public class SortBubblesApp extends GraphicsCore {
-    public static int[] mas = {11, 3, 14, 16, 7, 1};
+    public static int[] mas = new int[50];
 
     @Override
     protected void showGraphics(Graphics graphics) {
         graphics.setColor(Color.BLACK);
         // 1. Нарисовать ячейки ввиде прямоугольников
         // (массив из 8 элементов)
-        graphics.drawRect(25, 25, 50, 50);
-        graphics.drawString(String.valueOf(24), 45, 55);
-
-        graphics.drawRect(80, 25, 50, 50);
-        graphics.drawString(String.valueOf(47), 100, 55);
-
-        graphics.drawRect(135, 25, 50, 50);
-        graphics.drawString(String.valueOf(47), 155, 55);
-
-        graphics.drawRect(190, 25, 50, 50);
-        graphics.drawString(String.valueOf(47), 210, 55);
-
-        graphics.drawRect(245, 25, 50, 50);
-        graphics.drawString(String.valueOf(47), 265, 55);
-
-        graphics.drawRect(300, 25, 50, 50);
-        graphics.drawString(String.valueOf(47), 320, 55);
-
-        graphics.drawRect(355, 25, 50, 50);
-        graphics.drawString(String.valueOf(47), 375, 55);
-
-        graphics.drawRect(410, 25, 50, 50);
-        graphics.drawString(String.valueOf(47), 430, 55);
-
-
         // 2. Отобразить элементы массива в
         // прямоугольниках
+        int posX = 25;
+        int posXText = 45;
+        for (int j = 0; j < mas.length; j++){
+            graphics.drawRect(posX, 25, 50, 50);
+            graphics.drawString(String.valueOf(mas[j]), posXText, 55);
+            posX += 55;
+            posXText += 55;
+        }
 
         // 3. Вызвать метод сортировки
+        // 4. Вынести в функцию
+        sortBubbles();
+    }
+
+    private void sortBubbles() {
+        for (int i = 0; i < mas.length - 1; i++) {
+            if (mas[i] > mas[i + 1]) {
+                int buf = mas[i];
+                mas[i] = mas[i + 1];
+                mas[i + 1] = buf;
+            }
+        }
     }
 
     public static void main(String[] args) {
-        // 4. Вынести в функцию
-        boolean isSorted = false;
-        int buf;
-        while (!isSorted) {
-            isSorted = true;
-            for (int i = 0; i < mas.length - 1; i++) {
-                if (mas[i] > mas[i + 1]) {
-                    isSorted = false;
-
-                    buf = mas[i];
-                    mas[i] = mas[i + 1];
-                    mas[i + 1] = buf;
-                }
-            }
-        }
-        // ...
-
+        init();
         run(new SortBubblesApp(), "Sort Bubble");
+    }
+
+    private static void init() {
+        for (int i = 0; i < mas.length; i++) {
+            mas[i] = new Random().nextInt(50);
+        }
     }
 }

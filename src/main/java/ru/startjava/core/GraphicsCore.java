@@ -6,7 +6,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 public abstract class GraphicsCore extends JPanel implements ActionListener {
-    private final int delay = 500;
+    private final int delay = 1500;
     private final int width = 600;
     private final int height = 600;
     private Timer animationTimer;
