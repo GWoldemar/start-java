@@ -6,20 +6,34 @@ import java.awt.*;
 import java.util.Random;
 
 public class SortBubblesApp extends GraphicsCore {
-    public static int[] mas = new int[50];
+    public static int[] mas = new int[300];
 
     @Override
     protected void showGraphics(Graphics graphics) {
         graphics.setColor(Color.BLACK);
+        int widthScreen = this.getWidth();
+        int heightScreen = this.getHeight();
         // 1. Нарисовать ячейки ввиде прямоугольников
         // (массив из 8 элементов)
         // 2. Отобразить элементы массива в
         // прямоугольниках
         int posX = 25;
         int posXText = 45;
+        int posY = 25;
+        int posYText = 55;
+
+        int widthSquare = 50;
         for (int j = 0; j < mas.length; j++){
-            graphics.drawRect(posX, 25, 50, 50);
-            graphics.drawString(String.valueOf(mas[j]), posXText, 55);
+            if (posX + widthSquare > widthScreen) {
+                posX = 25;
+                posXText = 45;
+                posY += 55;
+                posYText += 55;
+            }
+
+            graphics.drawRect(posX, posY, widthSquare, 50);
+            graphics.drawString(String.valueOf(mas[j]), posXText, posYText);
+
             posX += 55;
             posXText += 55;
         }
@@ -46,7 +60,7 @@ public class SortBubblesApp extends GraphicsCore {
 
     private static void init() {
         for (int i = 0; i < mas.length; i++) {
-            mas[i] = new Random().nextInt(50);
+            mas[i] = new Random().nextInt(mas.length);
         }
     }
 }
