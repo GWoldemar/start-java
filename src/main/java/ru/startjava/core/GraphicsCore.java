@@ -51,6 +51,7 @@ public abstract class GraphicsCore extends JPanel implements ActionListener {
                 frame.add(panel);       // Add panel to frame
                 frame.pack();           // Set component sizes and layout
                 frame.setVisible(true); // Display the resulting frame
+                frame.setResizable(false); // Window Resizable
             }
         });
     }
