@@ -39,10 +39,15 @@ public class CalculatorApp extends GraphicsCore {
 
         int widthSquare = 50;
 
+        int posXX = 225;
         int posYY = 140;
+
         int posYT = 175;
         for (int j = 0; j < operations.length; j++) {
-            graphics.drawRect(225, posYY, 60, 60);
+            if ((getCursorCoordinateX() >= posXX && getCursorCoordinateX() <= posXX + 60) && (getCursorCoordinateY() >= posYY && getCursorCoordinateY() <= posYY + 60)){
+                System.out.println(" Мышь на клавише " + operations[j]);
+            }
+            graphics.drawRect(posXX, posYY, 60, 60);
             graphics.drawString(String.valueOf(operations[j]), 255, posYT);
             posYY += 65;
             posYT += 65;
@@ -65,7 +70,13 @@ public class CalculatorApp extends GraphicsCore {
             posX += 65;
             posXTeXt += 65;
         }
-        graphics.drawRect(75, 335, 125, 60);
+
+        int XRes = 75;
+        int YRes = 335;
+        if ((getCursorCoordinateX() >= XRes && getCursorCoordinateX() <= XRes + 125) && (getCursorCoordinateY() >= YRes && getCursorCoordinateY() <= YRes + 60)){
+            System.out.println(" Мышь на клавише =");
+        }
+        graphics.drawRect(XRes, YRes, 125, 60);
         graphics.drawString("=", 135, 370);
 
         graphics.drawRect(10, 50, widthScreen - 25, 50);
