@@ -3,10 +3,12 @@ package ru.startjava.calculator;
 import ru.startjava.core.GraphicsCore;
 
 import java.awt.*;
+import java.util.Arrays;
 
 public class CalculatorApp extends GraphicsCore {
     private int x = 0;
     private int y = 0;
+    private TextField textField = new TextField();
 
     private Point getCursorLocation() {
         return MouseInfo.getPointerInfo()
@@ -44,9 +46,6 @@ public class CalculatorApp extends GraphicsCore {
 
         int posYT = 175;
         for (int j = 0; j < operations.length; j++) {
-            if ((getCursorCoordinateX() >= posXX && getCursorCoordinateX() <= posXX + 60) && (getCursorCoordinateY() >= posYY && getCursorCoordinateY() <= posYY + 60)){
-                System.out.println(" Мышь на клавише " + operations[j]);
-            }
             graphics.drawRect(posXX, posYY, 60, 60);
             graphics.drawString(String.valueOf(operations[j]), 255, posYT);
             posYY += 65;
@@ -61,10 +60,19 @@ public class CalculatorApp extends GraphicsCore {
                 posXTeXt = 30;
                 posYText += 65;
             }
-            if ((getCursorCoordinateX() >= posX && getCursorCoordinateX() <= posX + 60) &&
-                    (getCursorCoordinateY() >= posY && getCursorCoordinateY() <= posY + 60)) {
-                System.out.println(" Мышь на клавише " + numbers[i]);
+
+            if (isMouseClick) {
+                if ((mousePosX >= posX && mousePosX <= posX + 60) && (mousePosY >= posY && mousePosY <= posY + 60)) {
+                    System.out.println("Click key: " + numbers[i]);
+                    isMouseClick = false;
+                    String newSymbol = String.valueOf(numbers[i]);
+                    String oldSymbol = textField.getText();
+                    textField.setText(oldSymbol + newSymbol);
+                    textField.setCaretPosition(textField.getText().length());
+                }
+
             }
+
             graphics.drawRect(posX, posY, 60, 60);
             graphics.drawString(String.valueOf(numbers[i]), posXTeXt, posYText);
             posX += 65;
@@ -73,13 +81,17 @@ public class CalculatorApp extends GraphicsCore {
 
         int XRes = 75;
         int YRes = 335;
-        if ((getCursorCoordinateX() >= XRes && getCursorCoordinateX() <= XRes + 125) && (getCursorCoordinateY() >= YRes && getCursorCoordinateY() <= YRes + 60)){
-            System.out.println(" Мышь на клавише =");
-        }
         graphics.drawRect(XRes, YRes, 125, 60);
         graphics.drawString("=", 135, 370);
 
-        graphics.drawRect(10, 50, widthScreen - 25, 50);
+        if (Arrays.stream(this.getComponents()).allMatch(component -> component != textField)) {
+            graphics.drawRect(10, 50, widthScreen - 25, 50);
+            Font font = new Font("Family", Font.BOLD, 32);
+            textField.setFont(font);
+            textField.setPreferredSize(new Dimension(widthScreen - 25, 50));
+            this.add(textField);
+        }
+
     }
 
     public static void main(String[] args) {
