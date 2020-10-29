@@ -46,6 +46,17 @@ public class CalculatorApp extends GraphicsCore {
 
         int posYT = 175;
         for (int j = 0; j < operations.length; j++) {
+            if (isMouseClick) {
+                if ((mousePosX >= posXX && mousePosX <= posXX + 60) && (mousePosY >= posYY && mousePosY <= posYY + 60)) {
+                    System.out.println("Click key: " + operations[j]);
+                    isMouseClick = false;
+                    String newSymbol = String.valueOf(operations[j]);
+                    String oldSymbol = textField.getText();
+                    textField.setText(oldSymbol + newSymbol);
+                    textField.setCaretPosition(textField.getText().length());
+                }
+
+            }
             graphics.drawRect(posXX, posYY, 60, 60);
             graphics.drawString(String.valueOf(operations[j]), 255, posYT);
             posYY += 65;
@@ -81,6 +92,15 @@ public class CalculatorApp extends GraphicsCore {
 
         int XRes = 75;
         int YRes = 335;
+        if (isMouseClick) {
+            if ((mousePosX >= XRes && mousePosX <= XRes + 125) && (mousePosY >= YRes && mousePosY <= YRes + 60)) {
+                System.out.println("Click key: " + "=");
+                isMouseClick = false;
+                String newSymbol = "=";
+                textField.setText(newSymbol);
+                textField.setCaretPosition(textField.getText().length());
+            }
+        }
         graphics.drawRect(XRes, YRes, 125, 60);
         graphics.drawString("=", 135, 370);
 
