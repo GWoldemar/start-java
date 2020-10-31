@@ -9,10 +9,17 @@ public class CalculatorApp extends GraphicsCore {
     private int x = 0;
     private int y = 0;
     private TextField textField = new TextField();
+    private String oneValue = "";
+    private String ops = "";
+    private String twoValue = "";
 
     private Point getCursorLocation() {
         return MouseInfo.getPointerInfo()
                 .getLocation();
+    }
+
+    private String deleteString(String text, String removeText) {
+        return text.replace(removeText, "");
     }
 
     private int getCursorCoordinateX() {
@@ -50,10 +57,13 @@ public class CalculatorApp extends GraphicsCore {
                 if ((mousePosX >= posXX && mousePosX <= posXX + 60) && (mousePosY >= posYY && mousePosY <= posYY + 60)) {
                     System.out.println("Click key: " + operations[j]);
                     isMouseClick = false;
+                    oneValue = textField.getText();
+                    ops = String.valueOf(operations[j]);
                     String newSymbol = String.valueOf(operations[j]);
                     String oldSymbol = textField.getText();
                     textField.setText(oldSymbol + newSymbol);
                     textField.setCaretPosition(textField.getText().length());
+                    System.out.println(oneValue + ops);
                 }
 
             }
@@ -72,6 +82,7 @@ public class CalculatorApp extends GraphicsCore {
                 posYText += 65;
             }
 
+
             if (isMouseClick) {
                 if ((mousePosX >= posX && mousePosX <= posX + 60) && (mousePosY >= posY && mousePosY <= posY + 60)) {
                     System.out.println("Click key: " + numbers[i]);
@@ -81,8 +92,9 @@ public class CalculatorApp extends GraphicsCore {
                     textField.setText(oldSymbol + newSymbol);
                     textField.setCaretPosition(textField.getText().length());
                 }
-
             }
+
+//            textField.getText()
 
             graphics.drawRect(posX, posY, 60, 60);
             graphics.drawString(String.valueOf(numbers[i]), posXTeXt, posYText);
@@ -96,10 +108,25 @@ public class CalculatorApp extends GraphicsCore {
             if ((mousePosX >= XRes && mousePosX <= XRes + 125) && (mousePosY >= YRes && mousePosY <= YRes + 60)) {
                 System.out.println("Click key: " + "=");
                 isMouseClick = false;
-                String newSymbol = "=";
-                textField.setText(newSymbol);
-                textField.setCaretPosition(textField.getText().length());
+                twoValue = textField.getText(); // =
+                twoValue = deleteString(twoValue, oneValue);
+                twoValue = deleteString(twoValue, ops);
+                System.out.println(twoValue);
             }
+            if (ops.equals("+")) {
+                int result = Integer.parseInt(oneValue) + Integer.parseInt(twoValue);
+                textField.setText(String.valueOf(result));
+            } else if (ops.equals("-")) {
+                int result = Integer.parseInt(oneValue) - Integer.parseInt(twoValue);
+                textField.setText(String.valueOf(result));
+            } else if (ops.equals("/")) {
+                int result = Integer.parseInt(oneValue) / Integer.parseInt(twoValue);
+                textField.setText(String.valueOf(result));
+            } else if (ops.equals("*")) {
+                int result = Integer.parseInt(oneValue) * Integer.parseInt(twoValue);
+                textField.setText(String.valueOf(result));
+            }
+
         }
         graphics.drawRect(XRes, YRes, 125, 60);
         graphics.drawString("=", 135, 370);
