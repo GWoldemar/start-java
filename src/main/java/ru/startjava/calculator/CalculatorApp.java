@@ -108,6 +108,7 @@ public class CalculatorApp extends GraphicsCore {
             if ((mousePosX >= XRes && mousePosX <= XRes + 125) && (mousePosY >= YRes && mousePosY <= YRes + 60)) {
                 System.out.println("Click key: " + "=");
                 isMouseClick = false;
+                graphics.setColor(Color.RED);
                 twoValue = textField.getText(); // =
                 twoValue = deleteString(twoValue, oneValue);
                 twoValue = deleteString(twoValue, ops);
