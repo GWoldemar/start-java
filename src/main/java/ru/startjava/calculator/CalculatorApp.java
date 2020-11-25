@@ -30,6 +30,10 @@ public class CalculatorApp extends GraphicsCore {
         return getCursorLocation().y;
     }
 
+    private void clearText() {
+        textField.setText("");
+    }
+
     @Override
     protected void showGraphics(Graphics graphics) {
         // Макет калькулятора
@@ -129,6 +133,25 @@ public class CalculatorApp extends GraphicsCore {
             }
 
         }
+
+        int clearY = 70;
+        int clearX = 10;
+        boolean isClearButton = false;
+        if (isMouseClick) {
+            if ((mousePosX >= clearX && mousePosX <= clearX + 60) && (mousePosY >= clearY && mousePosY <= clearY + 60)) {
+                System.out.println("c");
+                isMouseClick = false;
+                isClearButton = true;
+                clearText();
+            }
+        }
+
+        if (isClearButton) {
+            graphics.setColor(Color.RED);
+            isClearButton = false;
+        }
+        graphics.drawRect(clearX, clearY, 60, 60);
+        graphics.drawString("C", 35, 105);
         graphics.drawRect(XRes, YRes, 125, 60);
         graphics.drawString("=", 135, 370);
 
@@ -139,7 +162,6 @@ public class CalculatorApp extends GraphicsCore {
             textField.setPreferredSize(new Dimension(widthScreen - 25, 50));
             this.add(textField);
         }
-
     }
 
     public static void main(String[] args) {
